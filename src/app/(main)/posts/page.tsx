@@ -3,20 +3,22 @@
 import Editor from "@/app/_components/editor";
 import Post from "@/app/_components/post"
 import axios from "axios";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { BsFileImage } from "react-icons/bs";
 
 export type PostType = {
-  id: number,
+  id: string,
   user: {
-    id: number,
+    id: string,
     name: string,
     username: string
   },
-  total_likes: number,
-  total_comments: number,
-  content: string,
+  total_likes?: number,
+  total_comments?: number,
+  body: string,
   comments?: CommentType[]
+  created_at: string,
+  updated_at?: string,
 }
 
 export type CommentType = {
@@ -29,70 +31,22 @@ export type CommentType = {
   content: string,
 }
 
-const data: PostType[] = [
-  {
-    id: 1,
-    user: {
-      id: 1,
-      name: "rahasia",
-      username: "rahasia"
-    },
-    total_likes: 200,
-    total_comments: 30,
-    content: "<p>dummy post</p><p>dummy post 1</p>"
-  },
-  {
-    id: 2,
-    user: {
-      id: 1,
-      name: "rahasia",
-      username: "rahasia"
-    },
-    total_likes: 200,
-    total_comments: 30,
-    content: "<p>dummy post</p><p>dummy post 1</p>"
-  },
-  {
-    id: 3,
-    user: {
-      id: 1,
-      name: "rahasia",
-      username: "rahasia"
-    },
-    total_likes: 200,
-    total_comments: 30,
-    content: "<p>dummy post</p><p>dummy post 1</p>"
-  },
-  {
-    id: 4,
-    user: {
-      id: 1,
-      name: "rahasia",
-      username: "rahasia"
-    },
-    total_likes: 200,
-    total_comments: 30,
-    content: "<p>dummy post</p><p>dummy post 1</p>"
-  },
-  {
-    id: 5,
-    user: {
-      id: 1,
-      name: "rahasia",
-      username: "rahasia"
-    },
-    total_likes: 200,
-    total_comments: 30,
-    content: "<p>dummy post</p><p>dummy post 1</p>"
-  }
-]
-
 export default function Home() {
   const [text, setText] = useState("");
+  const [posts, setPosts] = useState<PostType[]>([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const posts = await axios.get("/api/post");
+      setPosts(posts.data);
+    }
+    fetchPosts();
+  }, []);
 
   const handlePost = async (e: FormEvent) => {
     e.preventDefault();
-    const response = await axios.post("/api/post/create", { body: text });
+    const response = await axios.post("/api/post", { body: text });
+    setPosts(prev => [response.data, ...prev]);
 
     if (response.status == 201) {
       setText("");
@@ -114,7 +68,7 @@ export default function Home() {
         </div>
       </form>
     </div>
-    {data.map(post => (
+    {posts.map(post => (
       <Post key={post.id} post={post} />
     ))}
   </div>

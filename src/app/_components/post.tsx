@@ -15,7 +15,7 @@ export default function Post({ post }: { post: PostType }) {
         </div>
       </div>
     </div>
-    <div className="flex flex-col gap-2 mb-3" dangerouslySetInnerHTML={{ __html: post.content }}>
+    <div className="flex flex-col gap-2 mb-3" dangerouslySetInnerHTML={{ __html: post.body }}>
     </div>
     <Link href={"/posts/1/likes"} className={`flex gap-2 text-sm text-zinc-400 mb-1`}>
       <p className={``}>100 likes</p>

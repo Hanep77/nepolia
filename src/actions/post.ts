@@ -14,8 +14,43 @@ export const createPost = async (body: string) => {
   }
 
   const post = prisma.post.create({
-    data: postData
+    data: postData,
+    omit: {
+      userId: true
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          username: true
+        }
+      }
+    },
   })
 
   return post;
+}
+
+export const getPosts = () => {
+  const posts = prisma.post.findMany({
+    take: 10,
+    omit: {
+      userId: true
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          username: true
+        }
+      }
+    },
+    orderBy: {
+      createdAt: "desc"
+    }
+  });
+
+  return posts;
 }
