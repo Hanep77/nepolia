@@ -10,25 +10,27 @@ export type PostType = {
   id: string,
   user: {
     id: string,
-    name: string,
-    username: string
+    name: string | null,
+    username: string | null
   },
-  total_likes?: number,
-  total_comments?: number,
+  totalLikes?: number,
+  totalComments?: number,
   body: string,
   comments?: CommentType[]
-  created_at: string,
-  updated_at?: string,
+  createdAt: Date,
+  updatedAt?: Date,
 }
 
 export type CommentType = {
-  id: number,
+  id: string,
   user: {
-    id: number,
-    name: string,
-    username: string
+    id: string,
+    name: string | null,
+    username: string | null
   },
-  content: string,
+  body: string,
+  createdAt: Date,
+  updatedAt?: Date,
 }
 
 export default function Home() {

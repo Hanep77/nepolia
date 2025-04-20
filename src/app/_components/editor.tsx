@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Dispatch, KeyboardEvent, SetStateAction, useState } from "react";
+import React, { Dispatch, KeyboardEvent, SetStateAction } from "react";
 
 interface EditorProps {
   rows?: number,

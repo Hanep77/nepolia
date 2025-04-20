@@ -54,3 +54,36 @@ export const getPosts = () => {
 
   return posts;
 }
+
+export const getPost = (id: string) => {
+  const post = prisma.post.findUnique({
+    where: {
+      id: id
+    },
+    omit: {
+      userId: true
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          username: true
+        }
+      },
+      Comment: {
+        include: {
+          user: {
+            select: {
+              id: true,
+              name: true,
+              username: true
+            }
+          }
+        }
+      }
+    },
+  });
+
+  return post;
+}

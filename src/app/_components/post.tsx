@@ -23,7 +23,7 @@ export default function Post({ post }: { post: PostType }) {
     </Link>
     <div className="flex justify-around gap-2">
       <button type="button" className="text-xl bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 border border-zinc-700 rounded-full w-1/2 h-8 flex justify-center items-center cursor-pointer"><BiLike /></button>
-      <Link href={'/posts/1'} className="text-xl bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 border border-zinc-700 rounded-full w-1/2 flex h-8 justify-center items-center"><BiComment /></Link>
+      <Link href={'/posts/' + post.id} className="text-xl bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 border border-zinc-700 rounded-full w-1/2 flex h-8 justify-center items-center"><BiComment /></Link>
       <button type="button" className="text-xl bg-zinc-800 hover:bg-zinc-700 active:bg-zinc-600 border border-zinc-700 rounded-full w-1/2 h-8 flex justify-center items-center cursor-pointer"><BiShare /></button>
     </div>
   </div >
