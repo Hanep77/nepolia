@@ -12,7 +12,14 @@ interface EditorProps {
 export default function Editor({ rows = 2, action, className, defaultValue }: EditorProps) {
   const handleInput = (e: KeyboardEvent) => {
     const target = e.target as HTMLTextAreaElement
-    const text = target.value.split("\n").map((value: string) => `<p>${value}</p>`).join("");
+    const text = target.value.split("\n").map((value: string) => {
+      const sanitize = value.replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+      return `<p>${sanitize}</p>`
+    }).join("");
     action(text);
   }
 
