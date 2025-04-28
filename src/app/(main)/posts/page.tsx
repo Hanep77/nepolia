@@ -9,12 +9,19 @@ export type PostType = {
     name: string | null,
     username: string | null
   },
-  totalLikes?: number,
-  totalComments?: number,
+  Like: {
+    id: string,
+    postId: string,
+    userId: string,
+  }[],
+  _count: {
+    Like: number,
+    Comment?: number,
+  },
   body: string,
-  comments?: CommentType[],
+  Comment?: CommentType[],
   createdAt: Date,
-  updatedAt?: Date,
+  updatedAt: Date,
 }
 
 export type CommentType = {
@@ -26,7 +33,7 @@ export type CommentType = {
   },
   body: string,
   createdAt: Date,
-  updatedAt?: Date,
+  updatedAt: Date,
 }
 
 export default async function Home() {

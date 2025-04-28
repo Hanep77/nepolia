@@ -32,7 +32,8 @@ export const createPost = async (body: string) => {
   return post;
 }
 
-export const getPosts = () => {
+export const getPosts = async () => {
+  const currentUser = await getCurrentUser();
   const posts = prisma.post.findMany({
     take: 10,
     omit: {
@@ -45,6 +46,18 @@ export const getPosts = () => {
           name: true,
           username: true
         }
+      },
+      Like: {
+        where: {
+          user: {
+            id: currentUser?.id
+          }
+        }
+      },
+      _count: {
+        select: {
+          Like: true
+        }
       }
     },
     orderBy: {
@@ -55,7 +68,8 @@ export const getPosts = () => {
   return posts;
 }
 
-export const getPost = (id: string) => {
+export const getPost = async (id: string) => {
+  const currentUser = await getCurrentUser();
   const post = prisma.post.findUnique({
     where: {
       id: id
@@ -79,7 +93,19 @@ export const getPost = (id: string) => {
               name: true,
               username: true
             }
+          },
+        }
+      },
+      Like: {
+        where: {
+          user: {
+            id: currentUser?.id
           }
+        }
+      },
+      _count: {
+        select: {
+          Like: true
         }
       }
     },
