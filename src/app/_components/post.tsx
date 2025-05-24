@@ -1,23 +1,27 @@
 "use client";
 
 import Link from "next/link";
-import { BiComment, BiLike, BiShare, BiSolidLike } from "react-icons/bi";
+import { BiComment, BiLike, BiShare, BiSolidComment, BiSolidLike } from "react-icons/bi";
 import { FaUser } from "react-icons/fa";
 import type { PostType } from "../(main)/posts/page";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useLike } from "@/context/likeContext";
+import formatDate from "@/utils/formatdate";
 
 export default function Post({ post }: { post: PostType }) {
   const [isLiked, setIsLiked] = useState<boolean>(post.Like.length > 0);
-  const [countLikes, setCountLikes] = useState(post._count.Like);
+  const [commentCount, setCommentCount] = useState<number>(0);
   const { likedPosts, setPosts } = useLike();
+  const LIKED = post.Like.length > 0;
 
   useEffect(() => {
     if (likedPosts) {
       setIsLiked(likedPosts[post.id]);
+      setCommentCount(Number(post._count.Comment));
     }
-  }, []);
+  }, [likedPosts, post.id, post._count.Comment]);
+
 
   const handleLike = async () => {
     const response = await axios.post("/api/like", {
@@ -25,15 +29,22 @@ export default function Post({ post }: { post: PostType }) {
     });
 
     if (response.status == 201) {
-      isLiked ? setCountLikes(countLikes - 1) : setCountLikes(countLikes + 1);
       setIsLiked(!isLiked);
       setPosts(prev => {
         if (prev) {
-          prev[post.id] = !prev[post.id]
+          prev[post.id] = !isLiked;
         }
         return prev;
       })
     }
+  }
+
+  const likesMessages = () => {
+    const countLikes = LIKED ? post._count.Like - 1 : post._count.Like;
+    if (isLiked && countLikes >= 2) return `you and ${countLikes} others`;
+    if (isLiked && countLikes == 1) return `you and ${countLikes} other`;
+    if (isLiked) return "you"
+    return countLikes;
   }
 
   return <div className="w-full p-4 bg-zinc-900 border-b border-zinc-700">
@@ -43,15 +54,25 @@ export default function Post({ post }: { post: PostType }) {
           <FaUser className="text-2xl" /></Link>
         <div>
           <Link href={'/users/'} className="font-medium">{post.user.username}</Link>
-          <p className="text-sm text-zinc-500">2 days ago</p>
+          <p className="text-sm text-zinc-500">{formatDate(post.createdAt)}</p>
         </div>
       </div>
     </div>
     <div className="flex flex-col gap-2 mb-3" dangerouslySetInnerHTML={{ __html: post.body }}>
     </div>
-    <Link href={"/posts/1/likes"} className={`flex gap-2 text-sm text-zinc-400 mb-1`}>
-      {countLikes > 0 && <p className={``}>{countLikes} {countLikes > 1 ? "likes" : "like"}</p>}
-      {post._count.Comment && <p className={``}>{post._count.Comment} comments</p>}
+    <Link href={"/posts/1/likes"} className={`flex justify-between gap-2 text-sm text-zinc-400 mb-1`}>
+      {
+        (likesMessages() !== 0 && (isLiked || post._count.Like > 0)) &&
+        <div className={`flex items-center gap-1`}>
+          <BiSolidLike />{likesMessages()}
+        </div>
+      }
+      {
+        commentCount > 0 &&
+        <div className={`flex items-center gap-1`}>
+          <BiSolidComment />{commentCount}
+        </div>
+      }
     </Link>
     <div className="flex justify-around gap-2">
       <button

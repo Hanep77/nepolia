@@ -1,8 +1,7 @@
 import { getPost } from "@/actions/post";
-import Comment from "@/app/_components/comment";
-import CommentForm from "@/app/_components/commentForm";
 import Post from "@/app/_components/post"
 import { PostType } from "../page";
+import DisplayComments from "@/app/_components/displayComments";
 
 export default async function PostDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -16,13 +15,6 @@ export default async function PostDetail({ params }: { params: Promise<{ id: str
 
   return <div className="min-h-[calc(100vh-64px)]">
     <Post post={data} />
-    <div className="border-b border-zinc-700 p-2">
-      <CommentForm postId={data.id} />
-    </div>
-    <div className="p-4 flex flex-col gap-2">
-      {
-        data.Comment?.map(comment => <Comment key={comment.id} comment={comment} />)
-      }
-    </div>
+    <DisplayComments comments={data.Comment} postId={data.id} />
   </div>
 }

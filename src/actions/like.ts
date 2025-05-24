@@ -26,7 +26,6 @@ export const toggleLike = async (postId: string) => {
         }
       },
     })
-    console.log(deleted);
     return deleted;
   }
 

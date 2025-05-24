@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { FaUser } from "react-icons/fa"
 import { CommentType } from "../(main)/posts/page";
+import formatDate from "@/utils/formatdate";
 
 export default function Comment({ comment }: { comment: CommentType }) {
   return <div key={comment.id} className="flex gap-3 border-b border-zinc-700 py-2">
@@ -12,7 +13,7 @@ export default function Comment({ comment }: { comment: CommentType }) {
       <div>
         <div className="flex items-center gap-2">
           <h5 className="font-medium">{comment.user.username}</h5>
-          <span className="text-sm text-zinc-500">- 2 days ago</span>
+          <span className="text-sm text-zinc-500">{formatDate(comment.createdAt)}</span>
         </div>
         <div dangerouslySetInnerHTML={{ __html: comment.body }}></div>
       </div>

@@ -56,7 +56,8 @@ export const getPosts = async () => {
       },
       _count: {
         select: {
-          Like: true
+          Like: true,
+          Comment: true
         }
       }
     },
@@ -94,6 +95,9 @@ export const getPost = async (id: string) => {
               username: true
             }
           },
+        },
+        orderBy: {
+          createdAt: "desc"
         }
       },
       Like: {
@@ -105,7 +109,8 @@ export const getPost = async (id: string) => {
       },
       _count: {
         select: {
-          Like: true
+          Like: true,
+          Comment: true
         }
       }
     },
