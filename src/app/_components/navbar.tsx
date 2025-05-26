@@ -1,11 +1,8 @@
-"use client";
-
-import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { BiSearch } from "react-icons/bi";
-import { FaUser } from "react-icons/fa";
 import { GoHomeFill } from "react-icons/go";
 import { RiMessageFill } from "react-icons/ri";
+import ProfileMenu from "./profileMenu";
 
 export default function Navbar() {
   return <header className="border-b bg-zinc-900 border-zinc-700 w-full top-0 sticky z-30">
@@ -31,10 +28,7 @@ export default function Navbar() {
           className="flex items-center justify-center h-10 font-medium w-10 text-xl rounded-full bg-zinc-800 hover:bg-zinc-700 border border-zinc-700">
           <RiMessageFill />
         </Link>
-        <button onClick={() => confirm("logout?") && signOut()}
-          className="flex items-center justify-center h-10 font-medium w-10 text-xl rounded-full bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 cursor-pointer">
-          <FaUser />
-        </button>
+        <ProfileMenu username={""} />
       </div>
     </nav>
   </header>

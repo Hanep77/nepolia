@@ -25,7 +25,7 @@ export const authOptions: AuthOptions = {
           throw new Error("Invalid credentials");
         }
 
-        let user = await prisma.user.findFirst({
+        const user = await prisma.user.findFirst({
           where: {
             username: credentials.username
           }

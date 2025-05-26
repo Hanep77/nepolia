@@ -53,7 +53,7 @@ export default function Post({ post }: { post: PostType }) {
         <Link href={'/users/'} className="flex justify-center items-center bg-zinc-800 border border-zinc-700 rounded-full w-10 h-10">
           <FaUser className="text-2xl" /></Link>
         <div>
-          <Link href={'/users/'} className="font-medium">{post.user.username}</Link>
+          <Link href={'/profile/' + post.user.username} className="font-medium">{post.user.username}</Link>
           <p className="text-sm text-zinc-500">{formatDate(post.createdAt)}</p>
         </div>
       </div>
