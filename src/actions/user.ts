@@ -1,9 +1,9 @@
+import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma"
-import { getServerSession } from "next-auth"
 
 export const getCurrentUser = async () => {
-  const session = await getServerSession();
-  const email = session?.user.email;
+  const session = await auth();
+  const email = session?.user?.email;
 
   const user = await prisma.user.findUnique({
     where: {

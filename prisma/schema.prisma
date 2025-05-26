@@ -24,7 +24,6 @@ model User {
     Comment          Comment[]
     Like             Like[]
     seenMessage      Message?           @relation("Seen", fields: [messageId], references: [id])
-    messageId        String?
     Message          Message[]
     UserConversation UserConversation[]
     Reply            Reply[]

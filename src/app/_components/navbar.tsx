@@ -28,7 +28,7 @@ export default function Navbar() {
           className="flex items-center justify-center h-10 font-medium w-10 text-xl rounded-full bg-zinc-800 hover:bg-zinc-700 border border-zinc-700">
           <RiMessageFill />
         </Link>
-        <ProfileMenu username={""} />
+        <ProfileMenu />
       </div>
     </nav>
   </header>

@@ -5,7 +5,6 @@ import Link from "next/link";
 export default async function Profile({ params }: { params: Promise<{ username: string }> }) {
   const { username } = await params;
   const user = await getUserProfile(username);
-  console.log(user);
 
   if (!user) {
     return <div className="min-h-[calc(100vh-64px)] flex justify-center items-center">not found</div>

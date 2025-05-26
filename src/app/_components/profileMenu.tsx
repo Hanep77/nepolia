@@ -5,13 +5,14 @@ import { useEffect, useState } from "react";
 import { getSession, signOut } from "next-auth/react";
 import Link from "next/link";
 
-export default function ProfileMenu({ username }: { username?: string | null }) {
+export default function ProfileMenu() {
   const [profileMenu, setProfileMenu] = useState(false);
+  const [username, setUsername] = useState("")
 
   useEffect(() => {
     const getUser = async () => {
       const session = await getSession();
-      console.log(session);
+      setUsername(session?.user.username as string);
     }
     getUser();
   }, [])
@@ -30,7 +31,7 @@ export default function ProfileMenu({ username }: { username?: string | null }) 
         </div>
         <p className="font-medium">hanep</p>
       </div>
-      <Link href={`/profile/${username}`} className="bg-zinc-800 block py-1 rounded-full text-center mb-2">View Profile</Link>
+      <Link href={`/profile/${username}`} onClick={() => setProfileMenu(false)} className="bg-zinc-800 block py-1 rounded-full text-center mb-2">View Profile</Link>
       <button onClick={() => confirm("logout?") && signOut()} className="bg-red-800 w-full py-1 rounded-full text-center cursor-pointer">Logout</button>
     </div>
   </div>

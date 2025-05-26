@@ -1,51 +1,35 @@
-import { AuthOptions, DefaultSession } from "next-auth"
+import NextAuth from "next-auth"
 import { PrismaAdapter } from "@auth/prisma-adapter"
-import { prisma } from "./prisma"
-import Credentials from "next-auth/providers/credentials"
-import bcryptjs from "bcryptjs"
+import { PrismaClient } from "@prisma/client"
+import authConfig from "./auth.config"
+import { Adapter } from "next-auth/adapters"
+
+const prisma = new PrismaClient()
 
 declare module "next-auth" {
-  interface Session extends DefaultSession {
-    user: {
-      username: string;
-    } & DefaultSession["user"];
+  interface User {
+    username: string;
+  }
+
+  interface Session {
+    user: User;
   }
 }
 
-export const authOptions: AuthOptions = {
-  adapter: PrismaAdapter(prisma),
-  providers: [
-    Credentials({
-      credentials: {
-        username: { label: "Username", type: "text" },
-        password: { label: "Password", type: "password" },
-      },
-      authorize: async (credentials) => {
-        if (!credentials) {
-          throw new Error("Invalid credentials");
-        }
-
-        const user = await prisma.user.findFirst({
-          where: {
-            username: credentials.username
-          }
-        })
-
-        if (!user || !user.password) {
-          throw new Error('Invalid Credentials');
-        }
-
-        const isCorrectPassword = await bcryptjs.compare(credentials.password, user.password);
-
-        if (!isCorrectPassword) {
-          throw new Error("Invalid credentials.")
-        }
-
-        return user
-      },
-    }),
-  ],
-  session: {
-    strategy: "jwt"
-  }
-}
+export const { auth, handlers, signIn, signOut } = NextAuth({
+  adapter: PrismaAdapter(prisma) as Adapter,
+  session: { strategy: "jwt" },
+  ...authConfig,
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.username = user.username;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.username = token.username as string;
+      return session;
+    },
+  },
+})
