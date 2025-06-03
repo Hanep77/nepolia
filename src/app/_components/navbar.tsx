@@ -15,16 +15,16 @@ export default function Navbar() {
         <div>
           <form className="hidden sm:flex border border-zinc-700 rounded-full">
             <input type="text" name="search" placeholder="search" className="h-10 w-40 px-4 outline-none" />
-            <button type="submit" className="w-10 h-10 bg-zinc-700 flex justify-center items-center rounded-full">
+            <button type="submit" className="w-10 h-10 bg-violet-800 hover:bg-violet-800/90 active:bg-violet-800/80 cursor-pointer flex justify-center items-center rounded-full">
               <BiSearch />
             </button>
           </form>
         </div>
-        <Link href={'/users/'}
+        <Link href={'/posts/'}
           className="flex items-center justify-center h-10 font-medium w-10 text-xl rounded-full bg-zinc-800 hover:bg-zinc-700 border border-zinc-700">
           <GoHomeFill />
         </Link>
-        <Link href={'/users/'}
+        <Link href={'/messages/'}
           className="flex items-center justify-center h-10 font-medium w-10 text-xl rounded-full bg-zinc-800 hover:bg-zinc-700 border border-zinc-700">
           <RiMessageFill />
         </Link>

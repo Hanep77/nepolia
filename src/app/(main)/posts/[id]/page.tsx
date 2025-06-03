@@ -8,12 +8,12 @@ export default async function PostDetail({ params }: { params: Promise<{ id: str
   const data = await getPost(id) as PostType;
 
   if (!data) {
-    return <div className="min-h-[calc(100vh-64px)] flex items-center justify-center">
+    return <div className="min-h-[calc(100vh-65px)] flex items-center justify-center">
       <p>404</p>
     </div>
   }
 
-  return <div className="min-h-[calc(100vh-64px)]">
+  return <div className="min-h-[calc(100vh-65px)]">
     <Post post={data} />
     <DisplayComments comments={data.Comment} postId={data.id} />
   </div>

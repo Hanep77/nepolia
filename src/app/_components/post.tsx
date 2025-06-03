@@ -61,12 +61,14 @@ export default function Post({ post }: { post: PostType }) {
     <div className="flex flex-col gap-2 mb-3" dangerouslySetInnerHTML={{ __html: post.body }}>
     </div>
     <Link href={"/posts/1/likes"} className={`flex justify-between gap-2 text-sm text-zinc-400 mb-1`}>
-      {
-        (likesMessages() !== 0 && (isLiked || post._count.Like > 0)) &&
-        <div className={`flex items-center gap-1`}>
-          <BiSolidLike />{likesMessages()}
-        </div>
-      }
+      <div>
+        {
+          (likesMessages() !== 0 && (isLiked || post._count.Like > 0)) &&
+          <div className={`flex items-center gap-1`}>
+            <BiSolidLike />{likesMessages()}
+          </div>
+        }
+      </div>
       {
         commentCount > 0 &&
         <div className={`flex items-center gap-1`}>

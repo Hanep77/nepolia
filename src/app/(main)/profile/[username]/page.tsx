@@ -7,7 +7,7 @@ export default async function Profile({ params }: { params: Promise<{ username: 
   const user = await getUserProfile(username);
 
   if (!user) {
-    return <div className="min-h-[calc(100vh-64px)] flex justify-center items-center">not found</div>
+    return <div className="min-h-[calc(100vh-65px)] flex justify-center items-center">not found</div>
   }
 
   return <div>

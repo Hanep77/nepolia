@@ -39,7 +39,7 @@ export default function PostForm() {
           <BsFileImage />
           Select Picture
         </label>
-        <button type="submit" className="bg-violet-800 hover:bg-violet-700 active:bg-violet-600 px-4 cursor-pointer py-1 rounded-full">post</button>
+        <button type="submit" className="bg-violet-800 px-4 cursor-pointer py-1 rounded-full">post</button>
       </div>
     </div>
     <form onSubmit={handlePost}>
@@ -52,7 +52,7 @@ export default function PostForm() {
               Select Picture
             </label>
             <input type="file" id="uploadImage" className="hidden" />
-            <button type="submit" className="bg-violet-800 hover:bg-violet-700 active:bg-violet-600 px-4 cursor-pointer py-1 rounded-full">post</button>
+            <button type="submit" className="bg-violet-800 hover:bg-violet-800/90 active:bg-violet-800/80 px-4 cursor-pointer py-1 rounded-full">post</button>
           </div>
         </div>
       </div>
