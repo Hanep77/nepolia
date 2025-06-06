@@ -29,7 +29,7 @@ export default function ProfileMenu() {
           className="flex items-center justify-center h-10 font-medium w-10 text-xl rounded-full bg-zinc-800 border border-zinc-700">
           <FaUser />
         </div>
-        <p className="font-medium">hanep</p>
+        <p className="font-medium">{username}</p>
       </div>
       <Link href={`/profile/${username}`} onClick={() => setProfileMenu(false)} className="bg-zinc-800 block py-1 rounded-full text-center mb-2">View Profile</Link>
       <button onClick={() => confirm("logout?") && signOut()} className="bg-red-800 w-full py-1 rounded-full text-center cursor-pointer">Logout</button>

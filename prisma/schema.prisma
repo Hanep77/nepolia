@@ -23,7 +23,6 @@ model User {
     Post             Post[]
     Comment          Comment[]
     Like             Like[]
-    seenMessage      Message?           @relation("Seen", fields: [messageId], references: [id])
     Message          Message[]
     UserConversation UserConversation[]
     Reply            Reply[]
@@ -133,7 +132,6 @@ model Message {
     body           String?
     image          String?
     createdAt      DateTime @default(now())
-    seen           User[]   @relation("Seen")
     conversationId String
     senderId       String
 

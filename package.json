@@ -18,6 +18,8 @@
     "next": "15.2.4",
     "next-auth": "^5.0.0-beta.28",
     "nextjs-toploader": "^3.8.16",
+    "pusher": "^5.2.0",
+    "pusher-js": "^8.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0"

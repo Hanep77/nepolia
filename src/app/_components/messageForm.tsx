@@ -7,9 +7,10 @@ export default function MessageInput({ conversationId }: { conversationId: strin
   const handleSendMessage = (formData: FormData) => {
     const message = formData.get("message")
     const data = {
-      message: message,
+      message,
+      conversationId
     }
-    axios.post("/api/messages/create/" + conversationId, data, { headers: { Accept: "application/json" } })
+    axios.post("/api/message", data, { headers: { Accept: "application/json" } })
   }
 
   return (

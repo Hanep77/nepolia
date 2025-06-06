@@ -26,7 +26,6 @@ export const getUserProfile = async (username: string) => {
       username: username
     },
     omit: {
-      id: true,
       password: true
     },
     include: {

@@ -39,7 +39,7 @@ export default async function Profile({ params }: { params: Promise<{ username: 
       <div>
         <div className="grid gap-2 px-4 mt-4 justify-end">
           <button className="bg-zinc-800 hover:bg-zinc-800/75 active:hover:bg-zinc-800/50 border border-zinc-700 h-8 w-28 rounded flex items-center justify-center cursor-pointer">follow</button>
-          <Link href={"/message"} className="bg-zinc-800 border border-zinc-700 hover:bg-zinc-800/75 active:hover:bg-zinc-800/50 h-8 w-28 rounded flex items-center justify-center">message</Link>
+          <Link href={`/messages/${username}`} className="bg-zinc-800 border border-zinc-700 hover:bg-zinc-800/75 active:hover:bg-zinc-800/50 h-8 w-28 rounded flex items-center justify-center">message</Link>
         </div>
       </div>
     </div>
