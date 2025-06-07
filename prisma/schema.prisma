@@ -1,150 +1,151 @@
-datasource db {
-    provider = "postgresql"
-    url      = env("DATABASE_URL")
+generator client {
+  provider = "prisma-client-js"
 }
 
-generator client {
-    provider = "prisma-client-js"
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    username      String?
-    email         String    @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
-    password      String?
-    createdAt     DateTime  @default(now())
-    updatedAt     DateTime  @updatedAt
-
-    Post             Post[]
-    Comment          Comment[]
-    Like             Like[]
-    Message          Message[]
-    UserConversation UserConversation[]
-    Reply            Reply[]
+  id                              String             @id @default(cuid())
+  name                            String?
+  username                        String?
+  email                           String             @unique
+  emailVerified                   DateTime?
+  image                           String?
+  password                        String?
+  createdAt                       DateTime           @default(now())
+  updatedAt                       DateTime           @updatedAt
+  messageId                       String?
+  accounts                        Account[]
+  Comment                         Comment[]
+  Like                            Like[]
+  Follower                        Follow[]             @relation("Follower")
+  Following                       Follow[]             @relation("Following")
+  Message                         Message[]
+  Post                            Post[]
+  Reply                           Reply[]
+  sessions                        Session[]
+  Message_User_messageIdToMessage Message?           @relation("User_messageIdToMessage", fields: [messageId], references: [id])
+  UserConversation                UserConversation[]
 }
 
 model Account {
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String?
-    access_token      String?
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String?
-    session_state     String?
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@id([provider, providerAccountId])
+  @@id([provider, providerAccountId])
 }
 
 model Session {
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model VerificationToken {
-    identifier String
-    token      String
-    expires    DateTime
+  identifier String
+  token      String
+  expires    DateTime
 
-    @@id([identifier, token])
+  @@id([identifier, token])
 }
 
 model Post {
-    id     String @id @default(cuid())
-    userId String
-    body   String
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-    Comment Comment[]
-    Like    Like[]
+  id        String    @id @default(cuid())
+  userId    String
+  body      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Comment   Comment[]
+  Like      Like[]
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Comment {
-    id     String @id @default(cuid())
-    userId String
-    postId String
-    body   String
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    user  User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-    post  Post    @relation(fields: [postId], references: [id], onDelete: Cascade)
-    Reply Reply[]
+  id        String   @id @default(cuid())
+  userId    String
+  postId    String
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Reply     Reply[]
 }
 
 model Reply {
-    id        String @id @default(cuid())
-    userId    String
-    commentId String
-    body      String
-
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-    comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  id        String   @id @default(cuid())
+  userId    String
+  commentId String
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Like {
-    id     String @id @default(cuid())
-    userId String
-    postId String
-
-    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-    post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  id     String @id @default(cuid())
+  userId String
+  postId String
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Conversation {
-    id            String   @id @default(cuid())
-    createdAt     DateTime @default(now())
-    lastMessageAt DateTime @default(now())
-    name          String?
-    isGroup       Boolean?
-
-    messages Message[]
-    users    UserConversation[]
+  id            String             @id @default(cuid())
+  createdAt     DateTime           @default(now())
+  lastMessageAt DateTime           @default(now())
+  name          String?
+  isGroup       Boolean?
+  messages      Message[]
+  users         UserConversation[]
 }
 
 model Message {
-    id             String   @id @default(cuid())
-    body           String?
-    image          String?
-    createdAt      DateTime @default(now())
-    conversationId String
-    senderId       String
-
-    conversation Conversation @relation(fields: [conversationId], references: [id])
-    sender       User         @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  id                           String       @id @default(cuid())
+  body                         String?
+  image                        String?
+  createdAt                    DateTime     @default(now())
+  conversationId               String
+  senderId                     String
+  conversation                 Conversation @relation(fields: [conversationId], references: [id])
+  sender                       User         @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  User_User_messageIdToMessage User[]       @relation("User_messageIdToMessage")
 }
 
 model UserConversation {
-    userId         String
-    conversationId String
+  userId         String
+  conversationId String
+  Conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  User           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-    User         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-    Conversation Conversation? @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  @@id([userId, conversationId])
+}
 
-    @@id([userId, conversationId])
+model Follow {
+  followerId       String
+  followingId      String
+
+  follower  User         @relation("Follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following User         @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@id([followerId, followingId])
 }

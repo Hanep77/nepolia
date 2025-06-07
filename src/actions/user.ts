@@ -61,7 +61,9 @@ export const getUserProfile = async (username: string) => {
       },
       _count: {
         select: {
-          Post: true
+          Post: true,
+          Follower: true,
+          Following: true
         }
       }
     }

@@ -28,7 +28,7 @@ export default function PostForm() {
 
   const closeForm = (e: MouseEvent) => {
     e.preventDefault();
-    ref.current == e.target && setIsActive(!isActive);
+    if (ref.current == e.target) setIsActive(!isActive);
   }
 
   return <div>
