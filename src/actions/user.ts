@@ -75,3 +75,20 @@ export const getUserProfile = async (username: string) => {
 
   return user;
 }
+
+export const editProfle = async (data: { name?: string, username?: string, bio?: string }) => {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    return Response.json("Unauthorize", { status: 401 });
+  }
+
+  const updatedUser = prisma.user.update({
+    where: {
+      id: currentUser.id
+    },
+    data: data
+  })
+
+  return updatedUser;
+}

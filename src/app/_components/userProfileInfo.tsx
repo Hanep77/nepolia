@@ -10,6 +10,7 @@ interface UserInfoType {
   name: string | null,
   username: string | null,
   isFollowed: boolean,
+  bio: string | null,
   _count: {
     Post: number,
     Follower: number,
@@ -81,6 +82,13 @@ export default function UserProfileInfo({ currentUser, user }: { currentUser: Us
           </Link>
         </div>
       }
+      {user.username == currentUser?.username &&
+        <Link
+          href={`/editprofile`}
+          className="bg-violet-200 hover:bg-violet-200/75 active:hover:bg-zinc-200/50 h-8 w-28 mt-4 text-violet-800 rounded flex items-center justify-center">
+          edit profile
+        </Link>
+      }
     </div>
     <div className="flex justify-between p-4">
       <div className="flex flex-col">
@@ -98,9 +106,9 @@ export default function UserProfileInfo({ currentUser, user }: { currentUser: Us
             <p className="text-zinc-400">Posts</p>
           </div>
         </div>
-        <div className="mt-4">
-          <p>lorem ipsum dolor sit amet lorem ipsum lorem ipsum lorem ipsum</p>
-        </div>
+        {
+          user.bio && <div className="mt-4" dangerouslySetInnerHTML={{ __html: user.bio }}></div>
+        }
       </div>
     </div>
 

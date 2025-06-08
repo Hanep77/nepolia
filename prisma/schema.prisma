@@ -15,6 +15,7 @@ model User {
   emailVerified                   DateTime?
   image                           String?
   password                        String?
+  bio                             String?
   createdAt                       DateTime           @default(now())
   updatedAt                       DateTime           @updatedAt
   messageId                       String?
