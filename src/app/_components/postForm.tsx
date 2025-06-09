@@ -16,6 +16,8 @@ export default function PostForm() {
     e.preventDefault();
     const response = await axios.post("/api/post", { body: text });
     if (response.status == 201) {
+      (e.target as HTMLFormElement).editor.value = ""
+      setText("");
       route.refresh();
       setIsActive(!isActive);
     }

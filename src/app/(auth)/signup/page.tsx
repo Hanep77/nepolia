@@ -8,6 +8,7 @@ import { FormEvent, useState } from "react";
 
 export default function Signin() {
   const [error, setError] = useState<Record<string, string>>();
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const handleSignup = async (e: FormEvent) => {
@@ -22,16 +23,25 @@ export default function Signin() {
       password: formData.get("password"),
     } as Record<string, string>;
 
-    const data = await axios.post('/api/auth/signup', user)
-      .then(response => response.data)
-      .catch(error => {
-        if (error.response.status == 400) {
-          setError(error.response.data);
-        }
-      });
+    try {
+      setLoading(true);
+      const data = await axios.post('/api/auth/signup', user)
+        .then(response => response.data)
+        .catch(error => {
+          if (error.response.status == 400) {
+            setError(error.response.data);
+          }
+        });
 
-    if (data) {
-      router.push("/signin");
+      if (data) {
+        router.push("/signin");
+      }
+    } catch (error: unknown) {
+      if (error) {
+        console.log(error);
+      }
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -42,7 +52,12 @@ export default function Signin() {
       <Input type="email" name="email" title="Email" error={error?.email} />
       <Input type="text" name="username" title="Username" error={error?.username} />
       <Input type="text" name="password" title="Password" />
-      <button type="submit" className="h-10 bg-violet-800 w-full rounded hover:cursor-pointer">Sign up</button>
+      <button type="submit" className="h-10 bg-violet-800 w-full rounded hover:cursor-pointer flex items-center justify-center gap-2">
+        Sign up
+        {loading &&
+          <div className="w-6 h-6 rounded-full border-2 border-x-transparent animate-spin" />
+        }
+      </button>
     </form>
     <p className="text-sm mt-2 text-center">Already have account? <Link href="/signin" className="text-blue-400">Sign in</Link></p>
   </div>

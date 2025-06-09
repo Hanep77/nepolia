@@ -8,6 +8,7 @@ import { FormEvent, useState } from "react";
 
 export default function Signin() {
   const [error, setError] = useState<string>();
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   const handleSignin = async (e: FormEvent) => {
@@ -20,6 +21,7 @@ export default function Signin() {
       password: formData.get("password"),
     } as Record<string, string>;
 
+    setLoading(true);
     signIn('credentials', {
       ...user,
       redirect: false
@@ -32,6 +34,7 @@ export default function Signin() {
         if (callback?.ok) {
           router.push('/posts');
         }
+        setLoading(false);
       })
 
     // if (data) {
@@ -48,7 +51,12 @@ export default function Signin() {
     <form className="w-full" onSubmit={handleSignin}>
       <Input type="text" name="username" title="Username" />
       <Input type="password" name="password" title="Password" />
-      <button type="submit" className="h-10 bg-violet-800 w-full rounded hover:cursor-pointer">Sign in</button>
+      <button type="submit" className="h-10 bg-violet-800 w-full rounded hover:cursor-pointer flex items-center justify-center gap-2">
+        Sign in
+        {loading &&
+          <div className="w-6 h-6 rounded-full border-2 border-x-transparent animate-spin" />
+        }
+      </button>
     </form>
     <p className="text-sm mt-2 text-center">{"doesn't have account yet?"} <Link href="/signup" className="text-blue-400">Sign up</Link></p>
   </div>

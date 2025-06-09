@@ -42,7 +42,7 @@ export default function ConversationBox({ conversations }: { conversations: Conv
   }, [sortedConversation, setConversationsState, conversations])
 
   return <>
-    {
+    {conversationsState &&
       conversationsState?.map((item, index) => {
         const conversation = item as ConversationType;
 
