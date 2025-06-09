@@ -38,7 +38,8 @@ export const getUserProfile = async (username: string) => {
             select: {
               id: true,
               name: true,
-              username: true
+              username: true,
+              image: true
             }
           },
           Like: {

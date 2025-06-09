@@ -11,7 +11,8 @@ export default async function EditProfile() {
   const userProfileInfo = {
     name: currentUser.name,
     username: currentUser.username,
-    bio: currentUser.bio
+    bio: currentUser.bio,
+    image: currentUser.image
   }
 
   return <div className="py-4">

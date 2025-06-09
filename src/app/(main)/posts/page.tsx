@@ -7,7 +7,8 @@ export type PostType = {
   user: {
     id: string,
     name: string | null,
-    username: string | null
+    username: string | null,
+    image: string | null
   },
   Like: {
     id: string,

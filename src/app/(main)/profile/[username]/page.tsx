@@ -20,6 +20,7 @@ export default async function Profile({ params }: { params: Promise<{ username: 
     username: user.username,
     isFollowed: isFollowedVar ? true : false,
     bio: user.bio,
+    image: user.image,
     _count: {
       Post: user._count.Post,
       Follower: user._count.Follower,

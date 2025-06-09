@@ -23,7 +23,8 @@ export const createPost = async (body: string) => {
         select: {
           id: true,
           name: true,
-          username: true
+          username: true,
+          image: true
         }
       }
     },
@@ -44,7 +45,8 @@ export const getPosts = async () => {
         select: {
           id: true,
           name: true,
-          username: true
+          username: true,
+          image: true
         }
       },
       Like: {
@@ -83,7 +85,8 @@ export const getPost = async (id: string) => {
         select: {
           id: true,
           name: true,
-          username: true
+          username: true,
+          image: true
         }
       },
       Comment: {
@@ -92,7 +95,8 @@ export const getPost = async (id: string) => {
             select: {
               id: true,
               name: true,
-              username: true
+              username: true,
+              image: true
             }
           },
           _count: {

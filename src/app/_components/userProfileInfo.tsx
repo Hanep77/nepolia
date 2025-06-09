@@ -2,6 +2,7 @@
 
 import { User } from "@prisma/client";
 import axios from "axios";
+import Image from "next/image";
 import Link from "next/link";
 import { MouseEvent, useRef, useState } from "react";
 
@@ -11,6 +12,7 @@ interface UserInfoType {
   username: string | null,
   isFollowed: boolean,
   bio: string | null,
+  image: string | null,
   _count: {
     Post: number,
     Follower: number,
@@ -65,7 +67,11 @@ export default function UserProfileInfo({ currentUser, user }: { currentUser: Us
 
   return <div>
     <div className="bg-gradient-to-r from-violet-800 to-violet-700 flex flex-col items-center py-8 rounded-b-3xl">
-      <div className="bg-zinc-300 w-16 h-16 rounded-full flex justify-center items-center text-3xl font-medium text-violet-800 mb-4">H</div>
+      <div className="bg-zinc-300 w-20 h-20 rounded-full flex justify-center items-center text-3xl font-medium text-violet-800 mb-4 overflow-hidden">
+        {user.image &&
+          <Image priority src={user.image} width={500} height={500} alt="Profile Picture" className="h-full w-full object-cover" />
+        }
+      </div>
       <p className="text-violet-300">@{user.username}</p>
       <h5 className="text-lg font-medium">{user.name}</h5>
       {user.username !== currentUser?.username &&
