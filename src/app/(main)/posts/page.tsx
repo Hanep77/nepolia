@@ -31,6 +31,9 @@ export type CommentType = {
     name: string | null,
     username: string | null
   },
+  _count: {
+    Reply: number
+  },
   body: string,
   createdAt: Date,
   updatedAt: Date,

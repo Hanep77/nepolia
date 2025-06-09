@@ -95,6 +95,11 @@ export const getPost = async (id: string) => {
               username: true
             }
           },
+          _count: {
+            select: {
+              Reply: true
+            }
+          }
         },
         orderBy: {
           createdAt: "desc"

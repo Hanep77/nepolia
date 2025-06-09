@@ -11,11 +11,18 @@ export default function Comment({ comment }: { comment: CommentType }) {
     </div>
     <div>
       <div>
-        <div className="flex items-center gap-2">
-          <h5 className="font-medium">{comment.user.username}</h5>
-          <span className="text-sm text-zinc-500">{formatDate(comment.createdAt)}</span>
+        <div className="bg-zinc-800 py-2 px-3 rounded-xl mb-1">
+          <div className="flex items-center gap-2">
+            <h5 className="font-medium">{comment.user.username}</h5>
+          </div>
+          <div dangerouslySetInnerHTML={{ __html: comment.body }}></div>
         </div>
-        <div dangerouslySetInnerHTML={{ __html: comment.body }}></div>
+        <div className="flex gap-2">
+          <span className="text-sm text-zinc-500">{formatDate(comment.createdAt)}</span>
+          <Link href={"/comment/" + comment.id} className="text-sm text-violet-400 hover:text-violet-400/90 active:text-violet-400/80">
+            reply {comment._count.Reply > 0 && <span>({comment._count.Reply})</span>}
+          </Link>
+        </div>
       </div>
     </div>
   </div>
