@@ -18,7 +18,7 @@ export default function Signin() {
     const user = {
       name: formData.get("name"),
       email: formData.get("email"),
-      username: formData.get("username"),
+      username: formData.get("username")?.toString().toLowerCase(),
       password: formData.get("password"),
     } as Record<string, string>;
 

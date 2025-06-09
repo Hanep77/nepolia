@@ -1,6 +1,8 @@
 import { format, isToday, isYesterday } from "date-fns";
 
-const formatDate = (date: Date, onChat?: boolean) => {
+const formatDate = (dateParams: Date, onChat?: boolean) => {
+  const date = new Date(dateParams);
+
   if (isToday(date)) {
     return `${format(date, "HH:mm")}`;
   } else if (isYesterday(date)) {

@@ -17,5 +17,8 @@ export const config = {
   matcher: [
     '/posts/:path*',
     '/users/:path*',
+    '/messages/:path*',
+    '/profile/:path*',
+    '/editprofile/:path*',
   ]
 };
