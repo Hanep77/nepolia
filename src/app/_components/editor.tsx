@@ -7,7 +7,7 @@ interface EditorProps {
   action: Dispatch<SetStateAction<string>>,
   className?: string,
   defaultValue?: string
-  required: boolean
+  required?: boolean
 }
 
 export default function Editor({ rows = 2, action, className, defaultValue, required = true }: EditorProps) {
