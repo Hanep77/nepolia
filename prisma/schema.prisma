@@ -71,7 +71,8 @@ model VerificationToken {
 model Post {
   id        String    @id @default(cuid())
   userId    String
-  body      String
+  body      String?
+  image     String?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Comment   Comment[]

@@ -2,10 +2,12 @@ import { createPost, getPosts } from "@/actions/post";
 
 export async function POST(req: Request) {
   try {
-    const { body } = await req.json();
-    const post = await createPost(body);
+    const { body, image } = await req.json();
+    const post = await createPost(body, image);
+    console.log(image);
     return Response.json(post, { status: 201 });
   } catch (error: unknown) {
+    console.log(error);
     if (error) {
       return Response.json("internal server error", { status: 500 });
     }

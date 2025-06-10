@@ -40,7 +40,7 @@ export default function EditProfileForm({ userProfileInfo }: { userProfileInfo: 
 
     setLoading(true);
 
-    let imageurl = "";
+    let imageurl: string | null = null;
 
     if (uploadFile) {
       const form = new FormData();
@@ -80,7 +80,6 @@ export default function EditProfileForm({ userProfileInfo }: { userProfileInfo: 
 
   const handleFileChange = (e: ChangeEvent) => {
     const file = (e.target as HTMLInputElement).files?.[0];
-    console.log(file);
     if (file && file.type.startsWith("image/")) {
       setUploadFile(file);
     }

@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/actions/user";
 import { prisma } from "@/lib/prisma";
 
-export const createPost = async (body: string) => {
+export const createPost = async (body: string, image: string | null) => {
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
@@ -10,7 +10,8 @@ export const createPost = async (body: string) => {
 
   const postData = {
     userId: currentUser.id,
-    body: body
+    body: body,
+    image: image
   }
 
   const post = prisma.post.create({

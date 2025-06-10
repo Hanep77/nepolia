@@ -7,9 +7,10 @@ interface EditorProps {
   action: Dispatch<SetStateAction<string>>,
   className?: string,
   defaultValue?: string
+  required: boolean
 }
 
-export default function Editor({ rows = 2, action, className, defaultValue }: EditorProps) {
+export default function Editor({ rows = 2, action, className, defaultValue, required = true }: EditorProps) {
   const handleInput = (e: KeyboardEvent) => {
     const target = e.target as HTMLTextAreaElement
     const text = target.value.split("\n").map((value: string) => {
@@ -25,7 +26,7 @@ export default function Editor({ rows = 2, action, className, defaultValue }: Ed
 
   return (
     <textarea className={`${className} outline-none whitespace-pre-wrap resize-none w-full`}
-      name="editor" rows={rows} onKeyUp={handleInput} spellCheck="false" defaultValue={defaultValue} placeholder="type here..." required>
+      name="editor" rows={rows} onKeyUp={handleInput} spellCheck="false" defaultValue={defaultValue} placeholder="type here..." required={required}>
     </textarea>
   )
 }
