@@ -19,7 +19,7 @@ export type PostType = {
     Like: number,
     Comment?: number,
   },
-  body: string,
+  body: string | null,
   image: string | null,
   Comment?: CommentType[],
   createdAt: Date,
