@@ -61,7 +61,7 @@ export default function Post({ post }: { post: PostType }) {
         </div>
       </div>
     </div>
-    <div className="flex flex-col gap-2 mb-3" dangerouslySetInnerHTML={{ __html: post.body }}></div>
+    <div className="flex flex-col gap-2 mb-3" dangerouslySetInnerHTML={{ __html: post.body! }}></div>
     {post.image &&
       <div className="rounded w-full max-h-[500px] overflow-hidden mb-2">
         <Image src={post.image} width={2000} height={2000} alt="Profile Picture" className="h-full w-full object-cover" />
