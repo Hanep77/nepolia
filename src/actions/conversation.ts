@@ -87,7 +87,8 @@ export const getConversations = async () => {
           User: {
             select: {
               name: true,
-              username: true
+              username: true,
+              image: true
             }
           }
         }

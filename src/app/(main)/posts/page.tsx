@@ -31,7 +31,8 @@ export type CommentType = {
   user: {
     id: string,
     name: string | null,
-    username: string | null
+    username: string | null,
+    image: string | null,
   },
   _count: {
     Reply: number

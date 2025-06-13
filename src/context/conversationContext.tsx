@@ -17,13 +17,18 @@ export const ConversationProvider = ({ children }: { children: React.ReactNode }
   const [conversationsState, setConversationsState] = useState<Conversation[]>();
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchConversations = async () => {
       const response = await axios.get("/api/conversation");
       const conversations = response.data as ConversationType[];
-      const sortedConversation = conversations.sort((a, b) => a.messages[0].createdAt < b.messages[0].createdAt ? 1 : -1);
+      const sortedConversation = conversations.sort((a, b) => {
+        if (a.messages.length > 0 && b.messages.length > 0) {
+          return a.messages[0].createdAt < b.messages[0].createdAt ? 1 : -1
+        }
+        return 1
+      });
       setConversationsState(sortedConversation);
     }
-    fetchPosts();
+    fetchConversations();
   }, []);
 
   return <ConversationsContext.Provider value={{ conversationsState, setConversationsState }}>

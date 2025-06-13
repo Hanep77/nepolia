@@ -6,6 +6,8 @@ import { Conversation, Message, User } from "@prisma/client";
 import { useEffect } from "react";
 import { pusherClient } from "@/lib/pusher";
 import { useConversations } from "@/context/conversationContext";
+import Image from "next/image";
+import { FaUser } from "react-icons/fa";
 
 export interface ConversationType extends Conversation {
   users: {
@@ -20,6 +22,7 @@ export default function ConversationBox({ conversations }: { conversations: Conv
   const { conversationsState, setConversationsState } = useConversations();
 
   useEffect(() => {
+    setConversationsState(sortedConversation);
     const channel = pusherClient.subscribe("chat-channel");
 
     const handleNewMessage = (data: { message: Message }) => {
@@ -42,11 +45,12 @@ export default function ConversationBox({ conversations }: { conversations: Conv
   }, [sortedConversation, setConversationsState, conversations])
 
   return <>
-    {conversationsState &&
+    {
       conversationsState?.map((item, index) => {
         const conversation = item as ConversationType;
 
         const name = conversation.users[0].User.name;
+        const image = conversation.users[0].User.image;
         const username = conversation.users[0].User.username;
         const lastMessage = conversation.messages[0].body;
         const date = conversation.messages[0].createdAt;
@@ -55,8 +59,9 @@ export default function ConversationBox({ conversations }: { conversations: Conv
           <Link href={"/messages/" + username} key={index}>
             <div className="border-b border-zinc-700 flex items-center justify-between py-2">
               <div className="flex items-center gap-4">
-                <div className="bg-zinc-700 w-10 h-10 rounded-full flex items-center justify-center text-xl">
-                  P
+                <div className="bg-zinc-700 w-10 h-10 rounded-full flex items-center justify-center text-xl overflow-hidden">
+                  {image ? <Image src={image} width={500} height={500} alt="Profile Picture" className="h-full w-full object-cover" /> :
+                    <FaUser className="text-2xl" />}
                 </div>
                 <div>
                   <h3 className="text-lg font-medium">{name}</h3>

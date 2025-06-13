@@ -20,10 +20,21 @@ export default function Chats({ messages, userId, conversationId }: { messages: 
         setChats((prev) => [...prev, data.message]);
 
         setConversationsState(prev => {
+
           if (prev) {
+            const currentConversation = prev.find(conversation => conversation.id == conversationId)
+            if (!currentConversation) {
+              return prev
+            }
+
             const conversation = prev.find(item => item.id == data.message.conversationId) as ConversationType;
             conversation.messages[0] = data.message;
-            const sortedConversation = prev.sort((a, b) => (a as ConversationType).messages[0].createdAt < (b as ConversationType).messages[0].createdAt ? 1 : -1);
+            const sortedConversation = prev.sort((a, b) => {
+              if ((a as ConversationType).messages.length > 0 && (b as ConversationType).messages.length > 0) {
+                return (a as ConversationType).messages[0].createdAt < (b as ConversationType).messages[0].createdAt ? 1 : -1
+              }
+              return 1
+            });
             return [...sortedConversation];
           }
         })

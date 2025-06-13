@@ -51,7 +51,7 @@ export default function Post({ post }: { post: PostType }) {
   return <div className="w-full p-4 bg-zinc-900 border-b border-zinc-700">
     <div className="flex justify-between">
       <div className="flex items-center gap-3 mb-3">
-        <Link href={'/users/'} className="flex justify-center items-center bg-zinc-800 border border-zinc-700 rounded-full w-10 h-10 overflow-hidden">
+        <Link href={'/profile/' + post.user.username} className="flex justify-center items-center bg-zinc-800 border border-zinc-700 rounded-full w-10 h-10 overflow-hidden">
           {post.user.image ? <Image src={post.user.image} width={500} height={500} alt="Profile Picture" className="h-full w-full object-cover" /> : <FaUser className="text-2xl" />
           }
         </Link>
@@ -67,7 +67,7 @@ export default function Post({ post }: { post: PostType }) {
         <Image src={post.image} width={2000} height={2000} alt="Profile Picture" className="h-full w-full object-cover" />
       </div>
     }
-    <Link href={"/posts/1/likes"} className={`flex justify-between gap-2 text-sm text-zinc-400 mb-1`}>
+    <div className={`flex justify-between gap-2 text-sm text-zinc-400 mb-1`}>
       <div>
         {
           (likesMessages() !== 0 && (isLiked || post._count.Like > 0)) &&
@@ -82,7 +82,7 @@ export default function Post({ post }: { post: PostType }) {
           <BiSolidComment />{commentCount}
         </div>
       }
-    </Link>
+    </div>
     <div className="flex justify-around gap-2">
       <button
         onClick={handleLike}

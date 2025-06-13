@@ -24,7 +24,8 @@ export const createComment = async (body: string, postId: string) => {
         select: {
           id: true,
           name: true,
-          username: true
+          username: true,
+          image: true
         }
       },
       _count: {
@@ -50,7 +51,8 @@ export const getComment = async (id: string) => {
             select: {
               id: true,
               name: true,
-              username: true
+              username: true,
+              image: true
             }
           }
         }
@@ -59,7 +61,8 @@ export const getComment = async (id: string) => {
         select: {
           id: true,
           name: true,
-          username: true
+          username: true,
+          image: true
         }
       }
     }

@@ -37,7 +37,7 @@ export const createPost = async (body: string, image: string | null) => {
 export const getPosts = async () => {
   const currentUser = await getCurrentUser();
   const posts = prisma.post.findMany({
-    take: 10,
+    take: 50,
     omit: {
       userId: true
     },
