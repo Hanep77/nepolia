@@ -93,3 +93,20 @@ export const editProfle = async (data: { name?: string, username?: string, bio?:
 
   return updatedUser;
 }
+
+export const searchUser = async (keyword: string) => {
+  const users = await prisma.user.findMany({
+    where: {
+      OR: [
+        {
+          name: { contains: keyword, mode: "insensitive" }
+        },
+        {
+          username: { contains: keyword, mode: "insensitive" }
+        }
+      ]
+    }
+  })
+
+  return users;
+}
